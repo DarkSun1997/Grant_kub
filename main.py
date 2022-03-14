@@ -17,3 +17,5 @@ T = time_finish
 using_condition = Data["using_condition"]
 data_BLA = Data["info_BLA"]
 print(data_BLA)
+
+#проверка git и настройки 
