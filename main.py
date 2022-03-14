@@ -1,16 +1,19 @@
-# This is a sample Python script.
+import json
+import math
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+def g1(dparametr_T, dparametr_0, a, m, T):
+    return dparametr_T - dparametr_0 * math.exp((-a) / m * T)
 
+def g2(dparametr_T, dparametr_0, a, m, T):
+    return dparametr_T - dparametr_0 * math.exp((-a) / m * T)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+file_information_BLA = open('file_information_BLA.json')
+Data = json.load(file_information_BLA)
+print(Data['info_BLA'][0])
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+time_start = Data["time_start"]
+time_finish = Data["time_finish"]
+T = time_finish
+using_condition = Data["using_condition"]
+data_BLA = Data["info_BLA"]
+print(data_BLA)
