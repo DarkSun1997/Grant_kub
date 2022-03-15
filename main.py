@@ -1,6 +1,6 @@
 import json
 import math
-
+from scipy import integrate
 
 def fi1(a, m, T, tau):
     return math.exp((-a) / m * (T - tau)) / m
@@ -17,6 +17,24 @@ def g2(parametr_T, parametr_0, dparametr_0, a, m, T):
 def z(a, m, T, tau):
     print(tau)
     return tau
+
+def psi1(a, m, T, tau):
+    fi1_value=fi1(a, m, T, tau)
+    fi1_integrate = lambda tau_integrate: fi1(a, m, T, tau_integrate)
+    fi1_norm = integrate.quad(fi1_integrate,0,T)[0]
+    return fi1_value / fi1_norm
+
+def psi2(a, m, T, tau):
+    psi2_hut_value = psi2_hut(a, m, T, tau)
+    psi2_hut_integrate = lambda tau_integrate: psi2_hut(a, m, T, tau_integrate)
+    psi2_hut_norm = integrate.quad(psi2_hut_integrate,0,T)[0]
+    return  psi2_hut_value/psi2_hut_norm
+
+def psi2_hut(a, m, T, tau):
+    fi2_integrate = lambda tau_integrate: fi2(a, m, T, tau_integrate)
+    psi1_integrate = lambda tau_integrate: psi1(a, m, T, tau_integrate)
+    a_21=- integrate.quad(fi2_integrate*psi1_integrate, 0, T)[0]
+    return a_21*psi1(a, m, T, tau) + fi2(a, m, T, tau)
 
 
 def normal_func_L2(func, a, m, T, time_start, time_finish):
