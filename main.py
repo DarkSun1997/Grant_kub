@@ -18,16 +18,18 @@ def z(a, m, T, tau):
     print(tau)
     return tau
 
+def norm(func, a, m, T, tau):
+    func_integrate = lambda tau_integrate: func(a, m, T, tau_integrate)
+    return integrate.quad(func_integrate**2, 0, T)[0]
+
 def psi1(a, m, T, tau):
     fi1_value=fi1(a, m, T, tau)
-    fi1_integrate = lambda tau_integrate: fi1(a, m, T, tau_integrate)
-    fi1_norm = integrate.quad(fi1_integrate,0,T)[0]
+    fi1_norm = norm(fi1, a, m, T, tau)
     return fi1_value / fi1_norm
 
 def psi2(a, m, T, tau):
     psi2_hut_value = psi2_hut(a, m, T, tau)
-    psi2_hut_integrate = lambda tau_integrate: psi2_hut(a, m, T, tau_integrate)
-    psi2_hut_norm = integrate.quad(psi2_hut_integrate,0,T)[0]
+    psi2_hut_norm = norm(psi2_hut,a , m, T, tau)
     return  psi2_hut_value/psi2_hut_norm
 
 def psi2_hut(a, m, T, tau):
