@@ -46,3 +46,4 @@ data_BLA = Data["info_BLA"]
 ggg = normal_function_L2(z, 5.0, 10.0, -2.0, 2.0,1.0)
 print(ggg)
 print(data_BLA)
+123
