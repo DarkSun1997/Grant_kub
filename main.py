@@ -1,5 +1,7 @@
 import json
 import math
+from scipy import integrate
+
 
 
 def fi1(a, m, T, tau):
@@ -14,20 +16,18 @@ def g1(dparametr_T, dparametr_0, a, m, T):
 def g2(parametr_T, parametr_0, dparametr_0, a, m, T):
     return parametr_T - parametr_0 - dparametr_0 * (1 - math.exp((-a) / m * T)) * m / a
 
-def z(a, m, T, tau):
-    print(tau)
-    return tau
+def z(a,m,t,tau):
+    return tau * 3
+
+def normal_function_L2(func, a, m, time_start, time_finish, tau):
+    func_integrate = lambda tau_integrate: func(a, m, time_finish, tau_integrate) ** 2
+    print(func_integrate)
+    return math.sqrt(integrate.quad(func_integrate, time_start, time_finish)[0])
+
+def phi1(a, m, time_start, time_finish, tau):
+    return fi1(a, m, time_finish, tau) / normal_function_L2(fi1, a, m, time_start, time_finish, tau)
 
 
-def normal_func_L2(func, a, m, T, time_start, time_finish):
-    sum = 0
-    step = (time_finish - time_start) / 100
-    time = time_start
-    while time_finish - time > 0.00001:
-        sum = sum + (func(a, m, T, tau = time + step / 2) )  * step
-        print(sum)
-        time = time + step
-    return sum
 
 
 file_information_BLA = open('file_information_BLA.json')
@@ -39,7 +39,6 @@ time_finish = Data["time_finish"]
 T = time_finish
 using_condition = Data["using_condition"]
 data_BLA = Data["info_BLA"]
+ggg = normal_function_L2(z, 5.0, 10.0, -2.0, 2.0,1.0)
+print(ggg)
 print(data_BLA)
-print(time_start)
-print(time_finish)
-print(normal_func_L2(z, 10, 10, T, time_start, time_finish))
