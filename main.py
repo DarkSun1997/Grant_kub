@@ -21,26 +21,20 @@ def z(a,m,t,tau):
 
 def normal_function_L2(func, a, m, time_start, time_finish, tau):
     func_integrate = lambda tau_integrate: func(a, m, time_finish, tau_integrate) ** 2
-<<<<<<< HEAD
-    return math.sqrt(integrate.quad(func_integrate, time_start, time_finish)[0])
-=======
-    print(func_integrate)
     return math.sqrt(integrate.quad(func_integrate, time_start, time_finish)[0])
 
 def phi1(a, m, time_start, time_finish, tau):
     return fi1(a, m, time_finish, tau) / normal_function_L2(fi1, a, m, time_start, time_finish, tau)
->>>>>>> 8d5c2459369afe628d7e17587f02eb0fe13da921
 
 def ksi1(a, m, time_start, time_finish, tau):
     return fi1(a, m, time_finish, tau) / normal_function_L2(fi1, a, m, time_start, time_finish, tau)
 
-<<<<<<< HEAD
+
 def a21( a, m, time_start, time_finish, tau):
     func_integrate = lambda tau_integrate: - fi2(a, m, time_finish, tau_integrate) * \
                                            ksi1(a, m, time_start, time_finish, tau_integrate)
     return integrate.quad(func_integrate, time_start, time_finish)[0]
-=======
->>>>>>> 8d5c2459369afe628d7e17587f02eb0fe13da921
+
 
 def ksi2_p(a, m, time_start, time_finish, tau):
     return a21()*ksi1(a, m, time_start, time_finish, tau) + fi2(a, m, T, tau)
@@ -56,9 +50,4 @@ using_condition = Data["using_condition"]
 data_BLA = Data["info_BLA"]
 ggg = normal_function_L2(z, 5.0, 10.0, -2.0, 2.0,1.0)
 print(ggg)
-<<<<<<< HEAD
 print(data_BLA)
-123
-=======
-print(data_BLA)
->>>>>>> 8d5c2459369afe628d7e17587f02eb0fe13da921
