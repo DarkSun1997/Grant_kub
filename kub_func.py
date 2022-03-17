@@ -126,7 +126,21 @@ def B2(parametr_0,
            b22(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) * \
            g2(parametr_T=parametr_T, parametr_0=parametr_0, dparametr_0=dparametr_0, a=a, m=m, T=time_finish)
 
-
+def U(parametr_0,
+        dparametr_0,
+        parametr_T,
+        dparametr_T,
+       a,
+       m,
+       time_start,
+       time_finish,
+       tau):
+    return B1(parametr_0=parametr_0, dparametr_0=dparametr_0, parametr_T=parametr_T, dparametr_T=dparametr_T, a=a, m=m,
+              time_start=time_start, time_finish=time_finish, tau=tau) * \
+           psi1(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) + \
+           B2(parametr_0=parametr_0, dparametr_0=dparametr_0, parametr_T=parametr_T, dparametr_T=dparametr_T, a=a, m=m,
+              time_start=time_start, time_finish=time_finish, tau=tau) * \
+           psi2(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau)
 
 def z(a,m,T,tau):
     return tau * 3
