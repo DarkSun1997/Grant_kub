@@ -38,23 +38,33 @@ def normal_function_L2(func,
     func_integrate = lambda tau_integrate: func(a=a, m=m, T=time_finish, tau=tau_integrate) ** 2
     return math.sqrt(integrate.quad(func_integrate, time_start, time_finish)[0])
 
-def phi1(a, m, time_start, time_finish, tau):
-    return fi1(a, m, time_finish, tau) / normal_function_L2(fi1, a, m, time_start, time_finish, tau)
+def psi1(a,
+         m,
+         time_start,
+         time_finish,
+         tau):
+    return fi1(a=a, m=m, T=time_finish, tau=tau) / \
+           normal_function_L2(func=fi1, a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau)
 
-def ksi1(a, m, time_start, time_finish, tau):
-    return fi1(a, m, time_finish, tau) / normal_function_L2(fi1, a, m, time_start, time_finish, tau)
 
 
-def a21( a, m, time_start, time_finish, tau):
-    func_integrate = lambda tau_integrate: - fi2(a, m, time_finish, tau_integrate) * \
-                                           ksi1(a, m, time_start, time_finish, tau_integrate)
+
+def a21(a,
+        m,
+        time_start,
+        time_finish,
+        tau):
+    func_integrate = lambda tau_integrate: - fi2(a=a, m=m, T=time_finish, tau=tau_integrate) * \
+                                           psi1(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau_integrate)
     return integrate.quad(func_integrate, time_start, time_finish)[0]
 
 
-def ksi2_p(a, m, time_start, time_finish, tau):
-    return a21()*ksi1(a, m, time_start, time_finish, tau) + fi2(a, m, time_finish, tau)
+def psi2_p(a, m, time_start, time_finish, tau):
+    return a21(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau)*\
+           psi1(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) + \
+           fi2(a=a, m=m, T=time_finish, tau=tau)
 
 
 
-def z(a,m,t,tau):
+def z(a,m,T,tau):
     return tau * 3
