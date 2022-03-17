@@ -67,7 +67,7 @@ def psi2_p(a,
            time_start,
            time_finish,
            tau):
-    return a21(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau)*\
+    return a21(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) * \
            psi1(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) + \
            fi2(a=a, m=m, T=time_finish, tau=tau)
 
@@ -139,6 +139,3 @@ def U(parametr,
            psi1(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) + \
            B2(parametr=parametr, a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) * \
            psi2(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau)
-
-def z(a,m,T,tau):
-    return tau * 3
