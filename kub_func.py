@@ -2,109 +2,122 @@ import math
 from scipy import integrate
 
 
-def fi1(a,
+def fi1(parametr,
+        a,
         m,
-        T,
+        time_start,
+        time_finish,
         tau):
-    return math.exp((-a) / m * (T - tau)) / m
+    return math.exp((-a) / m * (time_finish - tau)) / m
 
 
-def fi2(a,
+def fi2(parametr,
+        a,
         m,
-        T,
+        time_start,
+        time_finish,
         tau):
-    return (1 - math.exp((-a) / m * (T - tau))) / a
+    return (1 - math.exp((-a) / m * (time_finish - tau))) / a
 
 
-def g1(dparametr_T,
-       dparametr_0,
-       a,
-       m,
-       T):
-    return dparametr_T - dparametr_0 * math.exp((-a) / m * T)
+def g1(parametr,
+        a,
+        m,
+        time_start,
+        time_finish,
+        tau):
+    return parametr[3] - parametr[1] * math.exp((-a) / m * time_finish)
 
 
-def g2(parametr_T,
-       parametr_0,
-       dparametr_0,
-       a,
-       m,
-       T):
-    return parametr_T - parametr_0 - dparametr_0 * (1 - math.exp((-a) / m * T)) * m / a
+def g2(parametr,
+        a,
+        m,
+        time_start,
+        time_finish,
+        tau):
+    return parametr[2] - parametr[0] - parametr[1] * (1 - math.exp((-a) / m * time_finish)) * m / a
 
 
 def normal_function_L2(func,
-                       a,
-                       m,
-                       time_start,
-                       time_finish,
-                       tau):
-    func_integrate = lambda tau_integrate: func(a=a, m=m, T=time_finish, tau=tau_integrate) ** 2
+                        parametr,
+                        a,
+                        m,
+                        time_start,
+                        time_finish,
+                        tau):
+    func_integrate = lambda tau_integrate: func(parametr, a, m, time_start, time_finish, tau_integrate) ** 2
     return math.sqrt(integrate.quad(func_integrate, time_start, time_finish)[0])
 
 
-def psi1(a,
-         m,
-         time_start,
-         time_finish,
-         tau):
-    return fi1(a=a, m=m, T=time_finish, tau=tau) / \
-           normal_function_L2(func=fi1, a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau)
+def psi1(parametr,
+            a,
+            m,
+            time_start,
+            time_finish,
+            tau):
+    return fi1(parametr, a, m, time_start, time_finish, tau) / \
+           normal_function_L2(fi1, parametr, a, m, time_start, time_finish, tau)
 
 
-def a21(a,
-        m,
-        time_start,
-        time_finish,
-        tau):
-    func_integrate = lambda tau_integrate: - fi2(a=a, m=m, T=time_finish, tau=tau_integrate) * \
-                                           psi1(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau_integrate)
+def a21(parametr,
+            a,
+            m,
+            time_start,
+            time_finish,
+            tau):
+    func_integrate = lambda tau_integrate: - fi2(parametr, a, m, time_start, time_finish, tau=tau_integrate) * \
+                                           psi1(parametr, a, m, time_start, time_finish, tau=tau_integrate)
     return integrate.quad(func_integrate, time_start, time_finish)[0]
 
 
-def psi2_p(a,
-           m,
-           time_start,
-           time_finish,
-           tau):
-    return a21(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) * \
-           psi1(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) + \
-           fi2(a=a, m=m, T=time_finish, tau=tau)
+def psi2_p(parametr,
+            a,
+            m,
+            time_start,
+            time_finish,
+            tau):
+    return a21(parametr, a, m, time_start, time_finish, tau) * \
+           psi1(parametr, a, m, time_start, time_finish, tau) + \
+           fi2(parametr, a, m, time_start, time_finish, tau)
 
 
-def psi2(a,
-         m,
-         time_start,
-         time_finish,
-         tau):
-    return psi2_p(a=a,m=m,time_start=time_start,time_finish=time_finish,tau=tau) * \
-           normal_function_L2(func=psi2_p, a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau)
+def psi2(parametr,
+            a,
+            m,
+            time_start,
+            time_finish,
+            tau):
+    return psi2_p(parametr, a, m, time_start, time_finish, tau) * \
+           normal_function_L2(psi2_p, parametr, a, m, time_start, time_finish, tau)
 
 
-def b11(a,
-        m,
-        time_start,
-        time_finish,
-        tau):
-    return normal_function_L2(func=fi1, a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau)
+def b11(parametr,
+            a,
+            m,
+            time_start,
+            time_finish,
+            tau):
+    return normal_function_L2(fi1, parametr, a, m, time_start, time_finish, tau)
 
 
-def b22(a,
-        m,
-        time_start,
-        time_finish,
-        tau):
-    return normal_function_L2(func=psi2_p, a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau)
+def b22(parametr,
+            a,
+            m,
+            time_start,
+            time_finish,
+            tau):
+    return normal_function_L2(psi2_p, parametr, a, m, time_start, time_finish, tau)
 
 
-def b21(a,
-        m,
-        time_start,
-        time_finish,
-        tau):
-    return a21(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) * \
-           (normal_function_L2(func=psi2_p, a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) * \
-            normal_function_L2(func=fi1, a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau))
+def b21(parametr,
+            a,
+            m,
+            time_start,
+            time_finish,
+            tau):
+    return a21(parametr, a, m, time_start, time_finish, tau) * \
+           (normal_function_L2(psi2_p, parametr, a, m, time_start, time_finish, tau) * \
+            normal_function_L2(fi1, parametr, a, m, time_start, time_finish, tau))
 
 
 def B1(parametr,
@@ -113,8 +126,8 @@ def B1(parametr,
         time_start,
         time_finish,
         tau):
-    return b11(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) * \
-           g1(dparametr_T=parametr[3], dparametr_0=parametr[1], a=a, m=m, T=time_finish)
+    return b11(parametr, a, m, time_start, time_finish, tau) * \
+           g1(parametr, a, m, time_start, time_finish, tau)
 
 
 def B2(parametr,
@@ -123,10 +136,10 @@ def B2(parametr,
        time_start,
        time_finish,
        tau):
-    return b21(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) * \
-           g1(dparametr_T = parametr[3], dparametr_0=parametr[1], a=a, m=m, T=time_finish) + \
-           b22(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) * \
-           g2(parametr_T=parametr[2], parametr_0=parametr[0], dparametr_0=parametr[1], a=a, m=m, T=time_finish)
+    return b21(parametr, a, m, time_start, time_finish, tau) * \
+           g1(parametr, a, m, time_start, time_finish, tau) + \
+           b22(parametr, a, m, time_start, time_finish, tau) * \
+           g2(parametr, a, m, time_start, time_finish, tau)
 
 
 def U(parametr,
@@ -135,7 +148,7 @@ def U(parametr,
        time_start,
        time_finish,
        tau):
-    return B1(parametr=parametr, a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) * \
-           psi1(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) + \
-           B2(parametr=parametr, a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) * \
-           psi2(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau)
+    return B1(parametr, a, m, time_start, time_finish, tau) * \
+           psi1(parametr, a, m, time_start, time_finish, tau) + \
+           B2(parametr, a, m, time_start, time_finish, tau) * \
+           psi2(parametr, a, m, time_start, time_finish, tau)
