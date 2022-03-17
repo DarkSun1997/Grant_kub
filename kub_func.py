@@ -87,7 +87,7 @@ def psi2(parametr,
             time_start,
             time_finish,
             tau):
-    return psi2_p(parametr, a, m, time_start, time_finish, tau) * \
+    return psi2_p(parametr, a, m, time_start, time_finish, tau) / \
            normal_function_L2(psi2_p, parametr, a, m, time_start, time_finish, tau)
 
 
@@ -97,7 +97,7 @@ def b11(parametr,
             time_start,
             time_finish,
             tau):
-    return normal_function_L2(fi1, parametr, a, m, time_start, time_finish, tau)
+    return 1 / normal_function_L2(fi1, parametr, a, m, time_start, time_finish, tau)
 
 
 def b22(parametr,
@@ -106,7 +106,7 @@ def b22(parametr,
             time_start,
             time_finish,
             tau):
-    return normal_function_L2(psi2_p, parametr, a, m, time_start, time_finish, tau)
+    return 1 / normal_function_L2(psi2_p, parametr, a, m, time_start, time_finish, tau)
 
 
 def b21(parametr,
@@ -115,7 +115,7 @@ def b21(parametr,
             time_start,
             time_finish,
             tau):
-    return a21(parametr, a, m, time_start, time_finish, tau) * \
+    return a21(parametr, a, m, time_start, time_finish, tau) / \
            (normal_function_L2(psi2_p, parametr, a, m, time_start, time_finish, tau) * \
             normal_function_L2(fi1, parametr, a, m, time_start, time_finish, tau))
 

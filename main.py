@@ -14,9 +14,9 @@ def eler(q,
         time_start,
         time_finish,
         tau):
-    q = q + time_step * w
-    w = w + time_step * ((kub_func.U(parametr, a, m, time_start, time_finish, time) - a * w) / m)
-    return q, w
+    dq = q + time_step * w
+    dw = w + time_step * ((kub_func.U(parametr, a, m, time_start, time_finish, time) - a * w) / m)
+    return dq, dw
 
 
 
