@@ -59,10 +59,72 @@ def a21(a,
     return integrate.quad(func_integrate, time_start, time_finish)[0]
 
 
-def psi2_p(a, m, time_start, time_finish, tau):
+def psi2_p(a,
+           m,
+           time_start,
+           time_finish,
+           tau):
     return a21(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau)*\
            psi1(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) + \
            fi2(a=a, m=m, T=time_finish, tau=tau)
+
+def psi2(a,
+         m,
+         time_start,
+         time_finish,
+         tau):
+    return psi2_p(a=a,m=m,time_start=time_start,time_finish=time_finish,tau=tau) * \
+           normal_function_L2(func=psi2_p, a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau)
+
+def b11(a,
+        m,
+        time_start,
+        time_finish,
+        tau):
+    return normal_function_L2(func=fi1, a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau)
+
+def b22(a,
+        m,
+        time_start,
+        time_finish,
+        tau):
+    return normal_function_L2(func=psi2_p, a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau)
+
+def b21(a,
+        m,
+        time_start,
+        time_finish,
+        tau):
+    return a21(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) * \
+           (normal_function_L2(func=psi2_p, a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) * \
+            normal_function_L2(func=fi1, a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau))
+
+def B1(parametr_0,
+        dparametr_0,
+        parametr_T,
+        dparametr_T,
+        a,
+        m,
+        time_start,
+        time_finish,
+        tau):
+    return b11(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) * \
+           g1(dparametr_T=dparametr_T, dparametr_0=dparametr_0, a=a, m=m, T=time_finish)
+
+
+def B2(parametr_0,
+        dparametr_0,
+        parametr_T,
+        dparametr_T,
+       a,
+       m,
+       time_start,
+       time_finish,
+       tau):
+    return b21(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) * \
+           g1(dparametr_T = dparametr_T, dparametr_0=dparametr_0, a=a, m=m, T=time_finish) + \
+           b22(a=a, m=m, time_start=time_start, time_finish=time_finish, tau=tau) * \
+           g2(parametr_T=parametr_T, parametr_0=parametr_0, dparametr_0=dparametr_0, a=a, m=m, T=time_finish)
 
 
 
