@@ -1,6 +1,6 @@
 import json
 import math
-import kubyshkin_functions
+import kub_func
 from scipy import integrate
 
 
@@ -16,6 +16,6 @@ time_finish = Data["time_finish"]
 T = time_finish
 using_condition = Data["using_condition"]
 data_BLA = Data["info_BLA"]
-ggg = kubyshkin_functions.normal_function_L2(kubyshkin_functions.z, 5.0, 10.0, -2.0, 2.0,1.0)
+ggg = kub_func.normal_function_L2(kub_func.z, 5.0, 10.0, -2.0, 2.0,1.0)
 print(ggg)
 print(data_BLA)
