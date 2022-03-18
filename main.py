@@ -18,10 +18,21 @@ def eler(q,
     dw = w + time_step * ((kub_func.U(parametr, a, m, time_start, time_finish, time) - a * w) / m)
     return dq, dw
 
-
+#интересная идея хранения промежуточных важных резудьтатов в глобальных переменных чтобы по 1000 раз не пересчитывать их 
+def generate_information_calc_BLA(Data):
+    for i in range(len(Data["info_BLA"])):
+        kub_func.information_calc_BLA.append({"x": {}, "y": {}, "z": {}})
+        kub_func.information_calc_BLA[i]["x"]["a21"] = None
 
 file_information_BLA = open('file_information_BLA.json')
 Data = json.load(file_information_BLA)
+
+generate_information_calc_BLA(Data)
+
+
+print(kub_func.information_calc_BLA)
+print(len(Data['info_BLA']))
+
 print(Data['info_BLA'][0])
 
 time_start = Data["time_start"]

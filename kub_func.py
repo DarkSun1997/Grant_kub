@@ -1,6 +1,7 @@
 import math
 from scipy import integrate
 
+information_calc_BLA = []
 fi1_L2_const = None
 fi1_L2_flag = False
 a21_const = None
