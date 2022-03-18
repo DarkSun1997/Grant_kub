@@ -1,6 +1,11 @@
 import math
 from scipy import integrate
 
+fi1_L2_const = None
+fi1_L2_flag = False
+a21_const = None
+number_BLA = None
+name_axis = None
 
 def fi1(parametr,
         a,
@@ -55,8 +60,11 @@ def psi1(parametr,
             time_start,
             time_finish,
             tau):
-    return fi1(parametr, a, m, time_start, time_finish, tau) / \
-           normal_function_L2(fi1, parametr, a, m, time_start, time_finish, tau)
+    global fi1_L2_const
+    if fi1_L2_const == None:
+        fi1_L2_const = normal_function_L2(fi1, parametr, a, m, time_start, time_finish, tau)
+    return fi1(parametr, a, m, time_start, time_finish, tau) / fi1_L2_const
+
 
 
 def a21(parametr,
@@ -65,6 +73,7 @@ def a21(parametr,
             time_start,
             time_finish,
             tau):
+
     func_integrate = lambda tau_integrate: - fi2(parametr, a, m, time_start, time_finish, tau=tau_integrate) * \
                                            psi1(parametr, a, m, time_start, time_finish, tau=tau_integrate)
     return integrate.quad(func_integrate, time_start, time_finish)[0]

@@ -47,3 +47,4 @@ while abs(time_finish - time) > 0.00000001:
     time = time + time_step
 
 print(result_x)
+print(kub_func.fi1_L2_const)
