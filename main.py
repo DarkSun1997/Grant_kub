@@ -91,8 +91,22 @@ def eler(q,
         time_start,
         time_finish,
         tau):
-    dq = q + time_step * w
-    dw = w + time_step * ((kub_func.U(parametr, a, m, time_start, time_finish, time) - a * w) / m)
+    k1 = w
+    q1 = (kub_func.U(parametr, a, m, time_start, time_finish, time) - a * w) / m
+
+    k2 = w + time_step/2
+    q2 = (kub_func.U(parametr, a, m, time_start, time_finish, time + time_step/2) - a * (w + time_step/2 * q1)) / m
+
+    k3 = w + time_step / 2
+    q3 = (kub_func.U(parametr, a, m, time_start, time_finish, time+ time_step/2) - a * (w + time_step / 2 * q2)) / m
+
+    k4 = w + time_step
+    q4 = (kub_func.U(parametr, a, m, time_start, time_finish, time+ time_step) - a * (w + time_step * q3)) / m
+
+    dq = q + time_step/6 * (k1 + 2*k2 + 2*k3 + k4)
+    dw = w + time_step/6 * (q1 + 2*q2 + 2*q3 + q4)
+    #dq = q + time_step * w
+    #dw = w + time_step * ((kub_func.U(parametr, a, m, time_start, time_finish, time) - a * w) / m)
     return dq, dw
 
 
@@ -116,14 +130,20 @@ m = Data["info_BLA"][0]["m"]
 result_x = []
 e = [Data["info_BLA"][0]["x"][0], Data["info_BLA"][0]["x"][1]]
 result_x.append(e)
-print(e)
+result_y = []
+e_y = [Data["info_BLA"][0]["y"][0], Data["info_BLA"][0]["y"][1]]
+result_y.append(e_y)
 time_step = 0.1
 time = time_start
 gg = 0
 while abs(time_finish - time) > 0.00000001:
     e = eler(result_x[len(result_x)-1][0], result_x[len(result_x)-1][1], time, time_step, Data["info_BLA"][0]["x"],a,m,time_start,time_finish,gg)
+    e_y = eler(result_y[len(result_y)-1][0], result_y[len(result_y)-1][1], time, time_step, Data["info_BLA"][0]["y"],a,m,time_start,time_finish,gg)
     result_x.append(e)
+    result_y.append(e_y)
     time = time + time_step
 
 print(result_x)
+print("------------")
+print(result_y)
 
