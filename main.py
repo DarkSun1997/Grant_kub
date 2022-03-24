@@ -1,5 +1,6 @@
 import json
 import math
+import info_cache
 import kub_func
 from scipy import integrate
 import matplotlib.pyplot as plt
@@ -19,14 +20,23 @@ def eler(q,
     return dq, dw
 
 #интересная идея хранения промежуточных важных резудьтатов в глобальных переменных чтобы по 1000 раз не пересчитывать их 
-def generate_information_calc_BLA(Data):
-    for i in range(len(Data["info_BLA"])):
-        kub_func.information_calc_BLA.append({"x": {}, "y": {}, "z": {}})
-        kub_func.information_calc_BLA[i]["x"]["a21"] = None
+def generate_information_calc_BLA():
+    for i in range(len(info_cache.info_BLA)):
+        #print(info_cache.info_BLA[i])
+        info_cache.info_BLA[i]["x"]["a21"] =  None
+        #print(info_cache.info_BLA[i])
 
 file_information_BLA = open('file_information_BLA.json')
 Data = json.load(file_information_BLA)
-
+info_cache.info_BLA = Data["info_BLA"]
+print(info_cache.info_BLA)
+#info_cache.info_BLA["time_start"] = 1000
+#print(info_cache.info_BLA)
+#info_cache.info_BLA["time_start"] = -1
+#kub_func.print_info()
+generate_information_calc_BLA()
+print(info_cache.info_BLA)
+"""
 generate_information_calc_BLA(Data)
 
 
@@ -59,3 +69,4 @@ while abs(time_finish - time) > 0.00000001:
 
 print(result_x)
 print(kub_func.fi1_L2_const)
+"""

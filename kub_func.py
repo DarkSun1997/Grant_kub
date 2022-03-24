@@ -1,4 +1,5 @@
 import math
+import info_cache
 from scipy import integrate
 
 information_calc_BLA = []
@@ -162,3 +163,7 @@ def U(parametr,
            psi1(parametr, a, m, time_start, time_finish, tau) + \
            B2(parametr, a, m, time_start, time_finish, tau) * \
            psi2(parametr, a, m, time_start, time_finish, tau)
+
+
+def print_info():
+    print(info_cache.info_BLA)
