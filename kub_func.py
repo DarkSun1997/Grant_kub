@@ -50,31 +50,26 @@ def psi1(id,
          tau):
     if info_cache.info_BLA[id][axis]["fi1_L2_const"] == None:
         info_cache.info_BLA[id][axis]["fi1_L2_const"] = normal_function_L2(fi1, id, axis, tau)
-    return fi1(id, axis, tau) / info_cache.info_BLA[id][axis]["fi1_L2_const"] 
+    return fi1(id, axis, tau) / info_cache.info_BLA[id][axis]["fi1_L2_const"]
 
 
 
-def a21(parametr,
-            a,
-            m,
-            time_start,
-            time_finish,
+def a21(id,
+         axis,
+         tau):
+    if info_cache.info_BLA[id][axis]["a21"] == None:
+        func_integrate = lambda tau_integrate: - fi2(id, axis, tau=tau_integrate) * \
+                                           psi1(id, axis, tau=tau_integrate)
+        info_cache.info_BLA[id][axis]["a21"] = integrate.quad(func_integrate, info_cache.time_start, info_cache.time_finish)[0]
+    return info_cache.info_BLA[id][axis]["a21"]
+
+
+def psi2_p(id,
+            axis,
             tau):
-
-    func_integrate = lambda tau_integrate: - fi2(parametr, a, m, time_start, time_finish, tau=tau_integrate) * \
-                                           psi1(parametr, a, m, time_start, time_finish, tau=tau_integrate)
-    return integrate.quad(func_integrate, time_start, time_finish)[0]
-
-
-def psi2_p(parametr,
-            a,
-            m,
-            time_start,
-            time_finish,
-            tau):
-    return a21(parametr, a, m, time_start, time_finish, tau) * \
-           psi1(parametr, a, m, time_start, time_finish, tau) + \
-           fi2(parametr, a, m, time_start, time_finish, tau)
+    return a21(id, axis, tau) * \
+           psi1(id, axis, tau) + \
+           fi2(id, axis, tau)
 
 
 def psi2(parametr,

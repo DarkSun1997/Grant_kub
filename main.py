@@ -46,6 +46,12 @@ def generate_information_calc_BLA():
         info_cache.info_BLA[i]["x"]["fi1_L2_const"] = None
         info_cache.info_BLA[i]["y"]["fi1_L2_const"] = None
         info_cache.info_BLA[i]["z"]["fi1_L2_const"] = None
+        info_cache.info_BLA[i]["x"]["a21"] = None
+        info_cache.info_BLA[i]["y"]["a21"] = None
+        info_cache.info_BLA[i]["z"]["a21"] = None
+        info_cache.info_BLA[i]["x"]["psi2_p_L2_const"] = None
+        info_cache.info_BLA[i]["y"]["psi2_p_L2_const"] = None
+        info_cache.info_BLA[i]["z"]["psi2_p_L2_const"] = None
         #print(info_cache.info_BLA[i])
 
 
