@@ -4,51 +4,45 @@ from scipy import integrate
 
 
 
-def fi1(parametr,
-        a,
-        m,
-        time_start,
-        time_finish,
+def fi1(id,
+        axis,
         tau):
-    return math.exp((-a) / m * (time_finish - tau)) / m
+    return math.exp((-info_cache.info_BLA[id]["a"]) / info_cache.info_BLA[id]["m"] *
+                    (info_cache.time_finish - tau)) / info_cache.info_BLA[id]["m"]
 
 
-def fi2(parametr,
-        a,
-        m,
-        time_start,
-        time_finish,
+def fi2(id,
+        axis,
         tau):
-    return (1 - math.exp((-a) / m * (time_finish - tau))) / a
+    return (1 - math.exp((-info_cache.info_BLA[id]["a"]) / info_cache.info_BLA[id]["m"] *
+                         (info_cache.time_finish - tau))) / info_cache.info_BLA[id]["a"]
 
 
-def g1(parametr,
-        a,
-        m,
-        time_start,
-        time_finish,
+def g1(id,
+        axis,
         tau):
-    return parametr[3] - parametr[1] * math.exp((-a) / m * time_finish)
+    if info_cache.info_BLA[id][axis]["g1"] == None :
+        info_cache.info_BLA[id][axis]["g1"] = info_cache.info_BLA[id][axis]["dT"] - info_cache.info_BLA[id][axis]["d0"] * \
+           math.exp((-info_cache.info_BLA[id]["a"]) / info_cache.info_BLA[id]["m"] * info_cache.time_finish)
+    return info_cache.info_BLA[id][axis]["g1"]
 
 
-def g2(parametr,
-        a,
-        m,
-        time_start,
-        time_finish,
+def g2(id,
+        axis,
         tau):
-    return parametr[2] - parametr[0] - parametr[1] * (1 - math.exp((-a) / m * time_finish)) * m / a
+    if info_cache.info_BLA[id][axis]["g2"] == None :
+        info_cache.info_BLA[id][axis]["g2"] = info_cache.info_BLA[id][axis]["T"] - info_cache.info_BLA[id][axis]["0"] \
+            - info_cache.info_BLA[id][axis]["d0"] * (1 - math.exp((-info_cache.info_BLA[id]["a"]) /
+            info_cache.info_BLA[id]["m"] * info_cache.time_finish)) * info_cache.info_BLA[id]["m"] / info_cache.info_BLA[id]["a"]
+    return info_cache.info_BLA[id][axis]["g2"]
 
 
 def normal_function_L2(func,
-                        parametr,
-                        a,
-                        m,
-                        time_start,
-                        time_finish,
-                        tau):
-    func_integrate = lambda tau_integrate: func(parametr, a, m, time_start, time_finish, tau_integrate) ** 2
-    return math.sqrt(integrate.quad(func_integrate, time_start, time_finish)[0])
+                       id,
+                       axis,
+                       tau):
+    func_integrate = lambda tau_integrate: func(id, axis, tau_integrate) ** 2
+    return math.sqrt(integrate.quad(func_integrate, info_cache.time_start, info_cache.time_finish)[0])
 
 
 def psi1(parametr,
