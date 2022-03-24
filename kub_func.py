@@ -97,49 +97,31 @@ def b22(id,
     return info_cache.info_BLA[id][axis]["b22"]
 
 
-def b21(parametr,
-            a,
-            m,
-            time_start,
-            time_finish,
+def b21(id,
+            axis,
             tau):
-    return a21(parametr, a, m, time_start, time_finish, tau) / \
-           (normal_function_L2(psi2_p, parametr, a, m, time_start, time_finish, tau) * \
-            normal_function_L2(fi1, parametr, a, m, time_start, time_finish, tau))
+    if info_cache.info_BLA[id][axis]["b21"] == None:
+        info_cache.info_BLA[id][axis]["b21"] = a21(id, axis, tau) / \
+                (normal_function_L2(psi2_p, id, axis, tau) * normal_function_L2(fi1, id, axis, tau))
+    return info_cache.info_BLA[id][axis]["b21"]
 
 
-def B1(parametr,
-        a,
-        m,
-        time_start,
-        time_finish,
-        tau):
-    return b11(parametr, a, m, time_start, time_finish, tau) * \
-           g1(parametr, a, m, time_start, time_finish, tau)
-
-
-def B2(parametr,
-       a,
-       m,
-       time_start,
-       time_finish,
+def B1(id,
+       axis,
        tau):
-    return b21(parametr, a, m, time_start, time_finish, tau) * \
-           g1(parametr, a, m, time_start, time_finish, tau) + \
-           b22(parametr, a, m, time_start, time_finish, tau) * \
-           g2(parametr, a, m, time_start, time_finish, tau)
+    return b11(id, axis, tau) * g1(id, axis, tau)
 
 
-def U(parametr,
-       a,
-       m,
-       time_start,
-       time_finish,
+def B2(id,
+       axis,
        tau):
-    return B1(parametr, a, m, time_start, time_finish, tau) * \
-           psi1(parametr, a, m, time_start, time_finish, tau) + \
-           B2(parametr, a, m, time_start, time_finish, tau) * \
-           psi2(parametr, a, m, time_start, time_finish, tau)
+    return b21(id, axis, tau) * g1(id, axis, tau) + b22(id, axis, tau) * g2(id, axis, tau)
+
+
+def U(id,
+       axis,
+       tau):
+    return B1(id, axis, tau) * psi1(id, axis, tau) + B2(id, axis, tau) * psi2(id, axis, tau)
 
 
 def print_info():
