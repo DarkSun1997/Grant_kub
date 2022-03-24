@@ -45,16 +45,12 @@ def normal_function_L2(func,
     return math.sqrt(integrate.quad(func_integrate, info_cache.time_start, info_cache.time_finish)[0])
 
 
-def psi1(parametr,
-            a,
-            m,
-            time_start,
-            time_finish,
-            tau):
-    global fi1_L2_const
-    if fi1_L2_const == None:
-        fi1_L2_const = normal_function_L2(fi1, parametr, a, m, time_start, time_finish, tau)
-    return fi1(parametr, a, m, time_start, time_finish, tau) / fi1_L2_const
+def psi1(id,
+         axis,
+         tau):
+    if info_cache.info_BLA[id][axis]["fi1_L2_const"] == None:
+        info_cache.info_BLA[id][axis]["fi1_L2_const"] = normal_function_L2(fi1, id, axis, tau)
+    return fi1(id, axis, tau) / info_cache.info_BLA[id][axis]["fi1_L2_const"] 
 
 
 
