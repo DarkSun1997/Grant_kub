@@ -7,16 +7,13 @@ import matplotlib.pyplot as plt
 
 def eler(q,
          w,
-        time,
+         time,
          time_step,
-        parametr,
-        a,
-        m,
-        time_start,
-        time_finish,
-        tau):
+         id,
+         axis,
+         tau):
     dq = q + time_step * w
-    dw = w + time_step * ((kub_func.U(parametr, a, m, time_start, time_finish, time) - a * w) / m)
+    dw = w + time_step * ((kub_func.U(id, axis, time) - info_cache.info_BLA[id]["a"] * w) / info_cache.info_BLA[id]["m"] )
     return dq, dw
 
 
@@ -67,6 +64,25 @@ def generate_information_calc_BLA():
 
 transmission_of_information()
 print(info_cache.info_BLA)
+
+
+
+
+
+
+result_x = []
+time_step = 0.001
+time = info_cache.time_start
+gg = 0
+e = [info_cache.info_BLA[0]["x"]["0"],info_cache.info_BLA[0]["x"]["d0"]]
+result_x.append(e)
+print(e)
+while abs(info_cache.time_finish - time) > 0.00000001:
+    e = eler(result_x[len(result_x)-1][0], result_x[len(result_x)-1][1], time, time_step, 0, "x", gg)
+    result_x.append(e)
+    time = time + time_step
+
+print(result_x)
 """
 generate_information_calc_BLA(Data)
 
