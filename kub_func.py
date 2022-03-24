@@ -72,32 +72,29 @@ def psi2_p(id,
            fi2(id, axis, tau)
 
 
-def psi2(parametr,
-            a,
-            m,
-            time_start,
-            time_finish,
+def psi2(id,
+            axis,
             tau):
-    return psi2_p(parametr, a, m, time_start, time_finish, tau) / \
-           normal_function_L2(psi2_p, parametr, a, m, time_start, time_finish, tau)
+    if info_cache.info_BLA[id][axis]["psi2_p_L2_const"] == None:
+        info_cache.info_BLA[id][axis]["psi2_p_L2_const"] = normal_function_L2(psi2_p, id, axis, tau, tau)
+    return psi2_p(id, axis, tau) / info_cache.info_BLA[id][axis]["psi2_p_L2_const"]
 
 
-def b11(parametr,
-            a,
-            m,
-            time_start,
-            time_finish,
+def b11(id,
+            axis,
             tau):
-    return 1 / normal_function_L2(fi1, parametr, a, m, time_start, time_finish, tau)
+    if info_cache.info_BLA[id][axis]["b11"] == None:
+        info_cache.info_BLA[id][axis]["b11"] = 1 / normal_function_L2(fi1, id, axis, tau)
+    return info_cache.info_BLA[id][axis]["b11"]
 
 
-def b22(parametr,
-            a,
-            m,
-            time_start,
-            time_finish,
+def b22(id,
+            axis,
             tau):
-    return 1 / normal_function_L2(psi2_p, parametr, a, m, time_start, time_finish, tau)
+
+    if info_cache.info_BLA[id][axis]["b22"] == None:
+        info_cache.info_BLA[id][axis]["b22"] = 1 / normal_function_L2(psi2_p, id, axis, tau)
+    return info_cache.info_BLA[id][axis]["b22"]
 
 
 def b21(parametr,
