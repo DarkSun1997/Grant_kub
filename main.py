@@ -19,22 +19,29 @@ def eler(q,
     dw = w + time_step * ((kub_func.U(parametr, a, m, time_start, time_finish, time) - a * w) / m)
     return dq, dw
 
-#интересная идея хранения промежуточных важных резудьтатов в глобальных переменных чтобы по 1000 раз не пересчитывать их 
+
+def transmission_of_information():
+    file_information_BLA = open('file_information_BLA.json')
+    Data = json.load(file_information_BLA)
+    info_cache.info_BLA = Data["info_BLA"]
+    info_cache.time_start = Data["time_start"]
+    info_cache.time_finish = Data["time_finish"]
+    info_cache.using_condition = Data["using_condition"]
+    info_cache.d = Data["d"]
+    generate_information_calc_BLA()
+
+
 def generate_information_calc_BLA():
     for i in range(len(info_cache.info_BLA)):
         #print(info_cache.info_BLA[i])
-        info_cache.info_BLA[i]["x"]["a21"] =  None
+        info_cache.info_BLA[i]["x"]["a21"] = None
+        info_cache.info_BLA[i]["y"]["a21"] = None
+        info_cache.info_BLA[i]["z"]["a21"] = None
         #print(info_cache.info_BLA[i])
 
-file_information_BLA = open('file_information_BLA.json')
-Data = json.load(file_information_BLA)
-info_cache.info_BLA = Data["info_BLA"]
-print(info_cache.info_BLA)
-#info_cache.info_BLA["time_start"] = 1000
-#print(info_cache.info_BLA)
-#info_cache.info_BLA["time_start"] = -1
-#kub_func.print_info()
-generate_information_calc_BLA()
+
+
+transmission_of_information()
 print(info_cache.info_BLA)
 """
 generate_information_calc_BLA(Data)
