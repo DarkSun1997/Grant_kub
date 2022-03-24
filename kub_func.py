@@ -2,12 +2,7 @@ import math
 import info_cache
 from scipy import integrate
 
-information_calc_BLA = []
-fi1_L2_const = None
-fi1_L2_flag = False
-a21_const = None
-number_BLA = None
-name_axis = None
+
 
 def fi1(parametr,
         a,
