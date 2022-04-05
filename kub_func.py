@@ -67,9 +67,7 @@ def a21(id,
 def psi2_p(id,
             axis,
             tau):
-    return a21(id, axis, tau) * \
-           psi1(id, axis, tau) + \
-           fi2(id, axis, tau)
+    return a21(id, axis, tau) * psi1(id, axis, tau) + fi2(id, axis, tau)
 
 
 def psi2(id,
