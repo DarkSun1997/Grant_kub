@@ -3,7 +3,6 @@ import info_cache
 from scipy import integrate
 
 
-
 def fi1(id,
         axis,
         tau):
@@ -51,7 +50,6 @@ def psi1(id,
     if info_cache.info_BLA[id][axis]["fi1_L2_const"] == None:
         info_cache.info_BLA[id][axis]["fi1_L2_const"] = normal_function_L2(fi1, id, axis, tau)
     return fi1(id, axis, tau) / info_cache.info_BLA[id][axis]["fi1_L2_const"]
-
 
 
 def a21(id,

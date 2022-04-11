@@ -71,8 +71,7 @@ for id in range(len(info_cache.info_BLA)):
     time = info_cache.time_start
     gg = 0
     e = [info_cache.info_BLA[id]["x"]["0"], info_cache.info_BLA[id]["x"]["d0"]]
-    result.append({"x":[],"y":[], "z":[]})
-    print(result)
+    result.append({"x": [], "y": [], "z": []})
     result[id]["x"].append(e)
     while abs(info_cache.time_finish - time) > 0.00000001:
         e = Runge_Kutta.eler(result[id]["x"][len(result[id]["x"]) - 1][0], result[id]["x"][len(result[id]["x"]) - 1][1],
@@ -115,5 +114,15 @@ for id in range(len(info_cache.info_BLA)):
 
     full_res1_y = full_res
     plt.plot(full_res1_x, full_res1_y)
+    """
+    full_res = []
+    for i in range(len(result[id]["z"])):
+        full_res.append(result[id]["z"][i][0])
 
+    full_res1_z = full_res
+
+    fig = plt.figure()
+    ax = plt.axes(projection='3d')
+    ax.plot(full_res1_x, full_res1_y, full_res1_z)
+    """
 plt.show()
