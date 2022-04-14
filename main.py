@@ -81,8 +81,8 @@ name_axis = ["x", "y", "z"]
 while abs(info_cache.time_finish - time) > 0.00000001:
     for id in range(len(info_cache.info_BLA)):
         for axis in name_axis:
-            e = Runge_Kutta.eler(result[id][axis][len(result[id][axis]) - 1][0], result[id][axis][len(result[id][axis]) - 1][1],
-                                     time, time_step, id, axis, gg)
+            e = Runge_Kutta.eler(result[id][axis][len(result[id][axis]) - 1][0],
+                                 result[id][axis][len(result[id][axis]) - 1][1], time, time_step, id, axis, gg)
             result[id][axis].append(e)
     time = time + time_step
 
@@ -102,27 +102,5 @@ for id in range(len(info_cache.info_BLA)):
     full_res1_y = full_res
     plt.plot(full_res1_x, full_res1_y)
 
-"""
-    full_res = []
-    for i in range(len(result[id]["x"])):
-        full_res.append(result[id]["x"][i][0])
 
-    full_res1_x = full_res
-    full_res = []
-    for i in range(len(result[id]["y"])):
-        full_res.append(result[id]["y"][i][0])
-
-    full_res1_y = full_res
-    plt.plot(full_res1_x, full_res1_y)
-    
-    full_res = []
-    for i in range(len(result[id]["z"])):
-        full_res.append(result[id]["z"][i][0])
-
-    full_res1_z = full_res
-
-    fig = plt.figure()
-    ax = plt.axes(projection='3d')
-    ax.plot(full_res1_x, full_res1_y, full_res1_z)
-    """
 plt.show()
