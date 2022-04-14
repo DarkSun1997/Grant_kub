@@ -77,18 +77,13 @@ for id in range(len(info_cache.info_BLA)):
 time_step = 0.001
 time = info_cache.time_start
 gg = 0
+name_axis = ["x", "y", "z"]
 while abs(info_cache.time_finish - time) > 0.00000001:
     for id in range(len(info_cache.info_BLA)):
-        e = Runge_Kutta.eler(result[id]["x"][len(result[id]["x"]) - 1][0], result[id]["x"][len(result[id]["x"]) - 1][1],
-                                 time, time_step, id, "x", gg)
-        result[id]["x"].append(e)
-        e = Runge_Kutta.eler(result[id]["y"][len(result[id]["y"]) - 1][0], result[id]["y"][len(result[id]["y"]) - 1][1],
-                                 time, time_step, id, "y", gg)
-        result[id]["y"].append(e)
-
-        e = Runge_Kutta.eler(result[id]["z"][len(result[id]["z"]) - 1][0], result[id]["z"][len(result[id]["z"]) - 1][1],
-                                 time, time_step, id, "y", gg)
-        result[id]["z"].append(e)
+        for axis in name_axis:
+            e = Runge_Kutta.eler(result[id][axis][len(result[id][axis]) - 1][0], result[id][axis][len(result[id][axis]) - 1][1],
+                                     time, time_step, id, axis, gg)
+            result[id][axis].append(e)
     time = time + time_step
 
 
