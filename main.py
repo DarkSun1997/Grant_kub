@@ -63,6 +63,7 @@ for id in range(len(info_cache.info_BLA)):
     e = [info_cache.info_BLA[id]["z"]["0"], info_cache.info_BLA[id]["z"]["d0"]]
     result[id]["z"].append(e)
 
+
 time_step = 0.001
 time = info_cache.time_start
 gg = 0
@@ -70,7 +71,7 @@ name_axis = ["x", "y", "z"]
 while abs(info_cache.time_finish - time) > 0.00000001:
     for id in range(len(info_cache.info_BLA)):
         for axis in name_axis:
-            e = Runge_Kutta.eler(result[id][axis][len(result[id][axis]) - 1][0],
+            e = Runge_Kutta.Runge_kutta(result[id][axis][len(result[id][axis]) - 1][0],
                                  result[id][axis][len(result[id][axis]) - 1][1], time, time_step, id, axis, gg)
             result[id][axis].append(e)
     time = time + time_step
