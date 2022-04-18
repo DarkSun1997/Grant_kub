@@ -7,7 +7,6 @@ from scipy import integrate
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 def transmission_of_information():
     file_information_BLA = open('file_information_BLA.json')
     Data = json.load(file_information_BLA)
@@ -64,16 +63,30 @@ for id in range(len(info_cache.info_BLA)):
     result[id]["z"].append(e)
 
 
-time_step = 0.001
+time_step = 0.01
 time = info_cache.time_start
 gg = 0
 name_axis = ["x", "y", "z"]
 while abs(info_cache.time_finish - time) > 0.00000001:
     for id in range(len(info_cache.info_BLA)):
-        for axis in name_axis:
-            e = Runge_Kutta.Runge_kutta(result[id][axis][len(result[id][axis]) - 1][0],
-                                 result[id][axis][len(result[id][axis]) - 1][1], time, time_step, id, axis, gg)
-            result[id][axis].append(e)
+        if (id==1):
+
+            for axis in name_axis:
+                if(axis=="x"):
+                    e = Runge_Kutta.Runge_kutta1(result[id][axis][len(result[id][axis]) - 1][0],
+                                    result[id][axis][len(result[id][axis]) - 1][1], time, time_step, id, axis, gg)
+                    result[id][axis].append(e)
+                else:
+                    e = Runge_Kutta.Runge_kutta(result[id][axis][len(result[id][axis]) - 1][0],
+                                                result[id][axis][len(result[id][axis]) - 1][1], time, time_step, id,
+                                                axis, gg)
+                    result[id][axis].append(e)
+        else:
+
+            for axis in name_axis:
+                e = Runge_Kutta.Runge_kutta(result[id][axis][len(result[id][axis]) - 1][0],
+                                     result[id][axis][len(result[id][axis]) - 1][1], time, time_step, id, axis, gg)
+                result[id][axis].append(e)
     time = time + time_step
 
 
@@ -91,6 +104,8 @@ for id in range(len(info_cache.info_BLA)):
 
     full_res1_y = full_res
     plt.plot(full_res1_x, full_res1_y)
+
+
 
 
 plt.show()

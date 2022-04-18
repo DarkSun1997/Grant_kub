@@ -120,5 +120,57 @@ def U(id,
     return B1(id, axis, tau) * psi1(id, axis, tau) + B2(id, axis, tau) * psi2(id, axis, tau)
 
 
+def U1(id,
+       axis,
+       tau):
+    return B1(id, axis, tau) * psi1(id, axis, tau) + B2(id, axis, tau) * psi2(id, axis, tau) + 5 * psi3(id, axis, tau)
+
+
 def print_info():
     print(info_cache.info_BLA)
+
+
+#говно код чтобы разобраться что делать
+
+def fi3(id,
+        axis,
+        tau):
+    return tau ** 2
+
+def psi3_p(id,
+            axis,
+            tau):
+    return a31(id, axis, tau) * psi1(id, axis, tau) + a32(id, axis, tau) * psi2(id, axis, tau) + fi3(id, axis, tau)
+
+def psi3(id,
+            axis,
+            tau):
+    return psi3_p(id, axis, tau) / normal_function_L2(psi3_p, id, axis, tau)
+
+def a31(id,
+         axis,
+         tau):
+    func_integrate = lambda tau_integrate: - fi3(id, axis, tau=tau_integrate) * \
+                                           psi1(id, axis, tau=tau_integrate)
+    z = integrate.quad(func_integrate, info_cache.time_start, info_cache.time_finish)[0]
+    return z
+
+
+def a32(id,
+         axis,
+         tau):
+    func_integrate = lambda tau_integrate: - fi3(id, axis, tau=tau_integrate) * \
+                                           psi2(id, axis, tau=tau_integrate)
+    z = integrate.quad(func_integrate, info_cache.time_start, info_cache.time_finish)[0]
+    return z
+
+
+def F(s,id,
+         axis,
+         tau, t):
+
+    dg = s[1]
+    dr = (psi3_p(id,axis,tau)-info_cache.info_BLA[id]["a"]*s[1])/info_cache.info_BLA[id]["m"]
+    return [dg,dr]
+
+
