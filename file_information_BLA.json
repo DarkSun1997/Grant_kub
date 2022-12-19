@@ -1,7 +1,7 @@
 {
     "time_start" : 0,
     "time_finish" : 10,
-    "using_condition" : false,
+    "using_condition" : true,
     "d" : 1,
     "info_BLA" :
     [
