@@ -8,6 +8,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
+#функции нормализации
+def normal_function_L2_2func(func1,
+                             func2,
+                       id,
+                       axis,
+                       tau):
+    func_integrate = lambda tau_integrate: func1(id, axis, tau_integrate) * func2(id, axis, tau_integrate)
+    return -(integrate.quad(func_integrate, info_cache.time_start, info_cache.time_finish)[0])
+
+
 
 
 def step_func_g(q,

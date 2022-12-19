@@ -17,6 +17,7 @@ def transmission_of_information():
     info_cache.time_finish = Data["time_finish"]
     info_cache.using_condition = Data["using_condition"]
     info_cache.d = Data["d"]
+    info_cache.axes_correction = Data["axes_correction"]
     generate_information_calc_BLA()
 
 
@@ -63,9 +64,9 @@ for id in range(len(info_cache.info_BLA)):
                                             gg)
                 result[id][axis].append(e)
         else:
-            if (id == 1):
+            if (id > 0):
                 for axis in name_axis:
-                    if(axis == "x"):
+                    if axis == info_cache.axes_correction:
                         e = Runge_Kutta.Runge_kutta1(result[id][axis][len(result[id][axis]) - 1][0],
                                                     result[id][axis][len(result[id][axis]) - 1][1], time, time_step, id,
                                                      axis, gg)
@@ -83,7 +84,7 @@ for id in range(len(info_cache.info_BLA)):
                     result[id][axis].append(e)
         time = time + time_step
 
-        
+
 #Отрисовка результата
 for id in range(len(info_cache.info_BLA)):
     full_res = []

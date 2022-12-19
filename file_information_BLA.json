@@ -2,6 +2,7 @@
     "time_start" : 0,
     "time_finish" : 10,
     "using_condition" : false,
+    "axes_correction" : "x",
     "d" : 1,
     "info_BLA" :
     [
