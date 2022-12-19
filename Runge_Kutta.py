@@ -72,3 +72,38 @@ def Runge_kutta1(q,
     new_w = w + time_step / 6 * (k1[1] + 2 * k2[1] + 2 * k3[1] + k4[1])
 
     return new_q, new_w
+
+
+
+def step_func_g(q,
+         w,
+         time,
+         time_step,
+         id,
+         axis,
+         tau,
+         ksi):
+    new_q = w
+    new_w = (ksi(id, axis, time) - info_cache.info_BLA[id]["a"] * w) / info_cache.info_BLA[id]["m"]
+    return new_q, new_w
+
+
+
+
+def Runge_kutta_func_g(q,
+         w,
+         time,
+         time_step,
+         id,
+         axis,
+         tau,
+         ksi):
+    k1 = step_func_g(q, w, time, time_step, id, axis, tau, ksi)
+    k2 = step_func_g(q + time_step * k1[0] / 2, w + time_step * k1[1] / 2, time, time_step, id, axis, tau, ksi)
+    k3 = step_func_g(q + time_step * k2[0] / 2, w + time_step * k2[1] / 2, time, time_step, id, axis, tau, ksi)
+    k4 = step_func_g(q + time_step * k3[0], w + time_step * k3[1], time, time_step, id, axis, tau, ksi)
+
+    new_q = q + time_step / 6 * (k1[0] + 2 * k2[0] + 2 * k3[0] + k4[0])
+    new_w = w + time_step / 6 * (k1[1] + 2 * k2[1] + 2 * k3[1] + k4[1])
+
+    return new_q, new_w

@@ -280,17 +280,6 @@ def psi5(id,
 
 
 
-def step_func_g(q,
-         w,
-         time,
-         time_step,
-         id,
-         axis,
-         tau,
-         ksi):
-    dq = w
-    dw = (ksi(id, axis, time) - info_cache.info_BLA[id]["a"] * w) / info_cache.info_BLA[id]["m"]
-    return dq, dw
 
 
 def F(s, id,
