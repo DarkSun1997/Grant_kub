@@ -1,7 +1,7 @@
 {
     "time_start" : 0,
     "time_finish" : 10,
-    "using_condition" : false,
+    "using_condition" : true,
     "axes_correction" : "x",
     "d" : 1,
     "info_BLA" :
@@ -55,6 +55,27 @@
                 "T" : 2,
                 "dT" : 0
             }
+        }
+    ],
+    "info_objects" :
+    [
+        {
+            "cylinder":
+            [
+                {
+                    "x": 0,
+                    "y": 3,
+                    "z": 3,
+                    "radius": 1
+                },
+                {
+                    "x": -10,
+                    "y": 3,
+                    "z": 3,
+                    "radius": 1
+
+                }
+            ]
         }
     ]
 }

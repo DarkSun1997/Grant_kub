@@ -4,6 +4,7 @@ import info_cache
 import kub_func
 import Runge_Kutta
 import Calc_function_g
+import drawing_generation
 from scipy import integrate
 import matplotlib.pyplot as plt
 import numpy as np
@@ -18,16 +19,7 @@ def transmission_of_information():
     info_cache.using_condition = Data["using_condition"]
     info_cache.d = Data["d"]
     info_cache.axes_correction = Data["axes_correction"]
-    generate_information_calc_BLA()
-
-
-def generate_information_calc_BLA():
-    for id in range(len(info_cache.info_BLA)):
-        name_axis = ["x", "y", "z"]
-        for axis in name_axis:
-            info_cache.info_BLA[id][axis]["fi1_L2_const"] = None
-            info_cache.info_BLA[id][axis]["psi2_p_L2_const"] = None
-
+    info_cache.info_objects = Data["info_objects"]
 
 transmission_of_information()
 print(info_cache.info_BLA)
@@ -78,23 +70,8 @@ for id in range(len(info_cache.info_BLA)):
                     result[id][axis].append(e)
         time = time + time_step
 
-
 #Отрисовка результата
-for id in range(len(info_cache.info_BLA)):
-    full_res = []
-    for i in range(len(result[id]["x"])):
-        full_res.append(result[id]["x"][i][0])
-    full_result_x = full_res
-
-    full_res = []
-    for i in range(len(result[id]["y"])):
-        full_res.append(result[id]["y"][i][0])
-    full_result_y = full_res
-
-    plt.plot(full_result_x, full_result_y)
-
-plt.show()
-
+drawing_generation.generate_ris(result)
 
 #Некоторый мусор для просмотра промежуточных результатов
 result_g = []

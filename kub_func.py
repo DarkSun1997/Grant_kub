@@ -49,7 +49,7 @@ def normal_function_L2(func,
 def psi1(id,
          axis,
          tau):
-    if info_cache.info_BLA[id][axis]["fi1_L2_const"] == None:
+    if not("fi1_L2_const" in info_cache.info_BLA[id][axis]):
         info_cache.info_BLA[id][axis]["fi1_L2_const"] = normal_function_L2(fi1, id, axis, tau)
     return fi1(id, axis, tau) / info_cache.info_BLA[id][axis]["fi1_L2_const"]
 
@@ -73,7 +73,7 @@ def psi2_p(id,
 def psi2(id,
             axis,
             tau):
-    if info_cache.info_BLA[id][axis]["psi2_p_L2_const"] == None:
+    if not("psi2_p_L2_const" in info_cache.info_BLA[id][axis]):
         info_cache.info_BLA[id][axis]["psi2_p_L2_const"] = normal_function_L2(psi2_p, id, axis, tau)
     return psi2_p(id, axis, tau) / info_cache.info_BLA[id][axis]["psi2_p_L2_const"]
 
