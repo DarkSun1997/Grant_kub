@@ -3,9 +3,11 @@ import math
 import info_cache
 import kub_func
 import Runge_Kutta
+import Calc_function_g
 from scipy import integrate
 import matplotlib.pyplot as plt
 import numpy as np
+
 
 def transmission_of_information():
     file_information_BLA = open('file_information_BLA.json')
@@ -32,8 +34,6 @@ def generate_information_calc_BLA():
             info_cache.info_BLA[i][axis]["b21"] = None
 
 
-
-
 transmission_of_information()
 print(info_cache.info_BLA)
 
@@ -53,8 +53,9 @@ time = info_cache.time_start
 gg = 0
 epsilon = 0.00000001
 name_axis = ["x", "y", "z"]
-while abs(info_cache.time_finish - time) > epsilon:
-    for id in range(len(info_cache.info_BLA)):
+for id in range(len(info_cache.info_BLA)):
+    time = info_cache.time_start
+    while abs(info_cache.time_finish - time) > epsilon:
         if info_cache.using_condition == False:
             for axis in name_axis:
                 e = Runge_Kutta.Runge_kutta(result[id][axis][len(result[id][axis]) - 1][0],
@@ -63,7 +64,6 @@ while abs(info_cache.time_finish - time) > epsilon:
                 result[id][axis].append(e)
         else:
             if (id == 1):
-
                 for axis in name_axis:
                     if(axis == "x"):
                         e = Runge_Kutta.Runge_kutta1(result[id][axis][len(result[id][axis]) - 1][0],
@@ -81,7 +81,9 @@ while abs(info_cache.time_finish - time) > epsilon:
                     e = Runge_Kutta.Runge_kutta(result[id][axis][len(result[id][axis]) - 1][0],
                                          result[id][axis][len(result[id][axis]) - 1][1], time, time_step, id, axis, gg)
                     result[id][axis].append(e)
-    time = time + time_step
+        time = time + time_step
+
+        
 #Отрисовка результата
 for id in range(len(info_cache.info_BLA)):
     full_res = []
@@ -97,3 +99,17 @@ for id in range(len(info_cache.info_BLA)):
     plt.plot(full_result_x, full_result_y)
 
 plt.show()
+
+
+#Некоторый мусор для просмотра промежуточных результатов
+result_g = []
+result_g.append([0, 0])
+time = info_cache.time_start
+print(time_step)
+while abs(info_cache.time_finish - time) > epsilon:
+    e = Calc_function_g.Runge_kutta(result_g[len(result_g) - 1][0],
+                                                    result_g[len(result_g) - 1][1], time, time_step, 0,
+                                                     "x", 0, kub_func.psi3)
+    result_g.append(e)
+    time = time + time_step
+print(result_g)

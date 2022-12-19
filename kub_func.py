@@ -109,13 +109,13 @@ def B1(id,
        tau):
     return b11(id, axis, tau) * g1(id, axis, tau)
 
-
+#B2
 def B2(id,
        axis,
        tau):
     return b21(id, axis, tau) * g1(id, axis, tau) + b22(id, axis, tau) * g2(id, axis, tau)
 
-
+#U
 def U(id,
        axis,
        tau):
@@ -130,6 +130,17 @@ def U1(id,
 
 def print_info():
     print(info_cache.info_BLA)
+
+
+
+
+
+
+
+
+
+
+
 
 
 #говно код чтобы разобраться что делать
