@@ -25,8 +25,6 @@ def generate_information_calc_BLA():
     for id in range(len(info_cache.info_BLA)):
         name_axis = ["x", "y", "z"]
         for axis in name_axis:
-            info_cache.info_BLA[id][axis]["g1"] = None
-            info_cache.info_BLA[id][axis]["g2"] = None
             info_cache.info_BLA[id][axis]["fi1_L2_const"] = None
             info_cache.info_BLA[id][axis]["psi2_p_L2_const"] = None
 
@@ -95,7 +93,7 @@ for id in range(len(info_cache.info_BLA)):
 
     plt.plot(full_result_x, full_result_y)
 
-#plt.show()
+plt.show()
 
 
 #Некоторый мусор для просмотра промежуточных результатов

@@ -38,10 +38,10 @@ def Runge_kutta(q,
     k3 = func(q + time_step * k2[0] / 2, w + time_step * k2[1] / 2, time, time_step, id, axis, tau)
     k4 = func(q + time_step * k3[0], w + time_step * k3[1], time, time_step, id, axis, tau)
 
-    dq = q + time_step / 6 * (k1[0] + 2 * k2[0] + 2 * k3[0] + k4[0])
-    dw = w + time_step / 6 * (k1[1] + 2 * k2[1] + 2 * k3[1] + k4[1])
+    new_q = q + time_step / 6 * (k1[0] + 2 * k2[0] + 2 * k3[0] + k4[0])
+    new_w = w + time_step / 6 * (k1[1] + 2 * k2[1] + 2 * k3[1] + k4[1])
 
-    return dq, dw
+    return new_q, new_w
 
 
 def func1(q,
@@ -68,7 +68,7 @@ def Runge_kutta1(q,
     k3 = func1(q + time_step * k2[0] / 2, w + time_step * k2[1] / 2, time, time_step, id, axis, tau)
     k4 = func1(q + time_step * k3[0], w + time_step * k3[1], time, time_step, id, axis, tau)
 
-    dq = q + time_step / 6 * (k1[0] + 2 * k2[0] + 2 * k3[0] + k4[0])
-    dw = w + time_step / 6 * (k1[1] + 2 * k2[1] + 2 * k3[1] + k4[1])
+    new_q = q + time_step / 6 * (k1[0] + 2 * k2[0] + 2 * k3[0] + k4[0])
+    new_w = w + time_step / 6 * (k1[1] + 2 * k2[1] + 2 * k3[1] + k4[1])
 
-    return dq, dw
+    return new_q, new_w

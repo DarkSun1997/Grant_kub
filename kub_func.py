@@ -22,7 +22,7 @@ def fi2(id,
 def g1(id,
         axis,
         tau):
-    if info_cache.info_BLA[id][axis]["g1"] == None:
+    if not("g1" in info_cache.info_BLA[id][axis]):
         info_cache.info_BLA[id][axis]["g1"] = info_cache.info_BLA[id][axis]["dT"] - info_cache.info_BLA[id][axis]["d0"] * \
            math.exp((-info_cache.info_BLA[id]["a"]) / info_cache.info_BLA[id]["m"] * info_cache.time_finish)
     return info_cache.info_BLA[id][axis]["g1"]
@@ -31,7 +31,7 @@ def g1(id,
 def g2(id,
         axis,
         tau):
-    if info_cache.info_BLA[id][axis]["g2"] == None:
+    if not("g2" in info_cache.info_BLA[id][axis]):
         info_cache.info_BLA[id][axis]["g2"] = info_cache.info_BLA[id][axis]["T"] - info_cache.info_BLA[id][axis]["0"] \
             - info_cache.info_BLA[id][axis]["d0"] * (1 - math.exp((-info_cache.info_BLA[id]["a"]) /
             info_cache.info_BLA[id]["m"] * info_cache.time_finish)) * info_cache.info_BLA[id]["m"] / info_cache.info_BLA[id]["a"]
