@@ -1,7 +1,7 @@
 {
     "time_start" : 0,
     "time_finish" : 10,
-    "using_condition" : false,
+    "using_condition" : true,
     "axes_correction" : "x",
     "d" : 1,
     "info_BLA" :
@@ -64,7 +64,7 @@
             [
                 {
                     "x": 0,
-                    "y": 3,
+                    "y": 4,
                     "z": 3,
                     "radius": 1
                 },

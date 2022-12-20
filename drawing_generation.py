@@ -3,7 +3,6 @@ import math
 import info_cache
 import kub_func
 import Runge_Kutta
-import Calc_function_g
 from scipy import integrate
 import matplotlib.pyplot as plt
 import numpy as np
@@ -25,9 +24,7 @@ def generate_ris(result):
 
     if info_cache.using_condition == True:
         for number in range(len(info_cache.info_objects)):
-            print(info_cache.info_objects[number])
             if info_cache.info_objects[number]['cylinder']:
-                print("OK")
                 for id in range(len(info_cache.info_objects[number]['cylinder'])):
                     mas_point_x = []
                     mas_point_y = []
