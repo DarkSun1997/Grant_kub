@@ -125,15 +125,12 @@ def U1(id,
        axis,
        tau):
     return B1(id, axis, tau) * psi1(id, axis, tau) + B2(id, axis, tau) * psi2(id, axis, tau) +\
-           -30 * psi3(id, axis, tau) + -10 * psi4(id, axis, tau) + -10 * psi5(id, axis, tau)
+           10 * psi3(id, axis, tau) + 0 * psi4(id, axis, tau) + 0 * psi5(id, axis, tau)
 
 
 def print_info():
     print(info_cache.info_BLA)
 
-
-
-#говно код чтобы разобраться что делать
 
 def fi3(id,
         axis,

@@ -1,11 +1,6 @@
-import json
 import math
 import info_cache
-import kub_func
-import Runge_Kutta
-from scipy import integrate
 import matplotlib.pyplot as plt
-import numpy as np
 
 
 def generate_ris(result):

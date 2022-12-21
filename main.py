@@ -4,9 +4,6 @@ import info_cache
 import kub_func
 import Runge_Kutta
 import drawing_generation
-from scipy import integrate
-import matplotlib.pyplot as plt
-import numpy as np
 
 
 def transmission_of_information():
@@ -105,8 +102,6 @@ for id in range(len(info_cache.info_BLA)):
                     result_g.append(e)
                     time = time + time_step
             info_cache.func_g[id].append(result_g)
-
-
 
             #решение с коррекцией
             time = info_cache.time_start
